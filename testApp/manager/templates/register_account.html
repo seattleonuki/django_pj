@@ -1,0 +1,23 @@
+{% load static %}
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+    <title>Create Account</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" href="{% static 'admin_css/login.css' %}">
+
+</head>
+<body>
+    <div class="form-wrapper">
+        <h1>作成完了</h1>
+            <form action="{% url 'login' %}">
+                <p>アカウントの新規作成が正常に完了しました。</p>
+                <div class="button-panel">
+                    <input type="submit" class="button" title="Log In" value="ログインページへ戻る"></input>
+                </div>
+            </form>
+            <div class="form-footer">
+            </div>
+    </div>
+</body>

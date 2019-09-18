@@ -1,0 +1,44 @@
+{% load static %}
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'admin_css/login.css' %}">
+
+
+</head>
+<body>
+    <div class="form-wrapper">
+        <h1>Admin Login</h1>
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-item">
+                {% if message %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>ERROR: </strong>{{ message }}
+                </div>
+                {% endif %}
+                <label for="email"></label>
+                <input type="email" name="email" placeholder="メールアドレス"></input>
+            </div>
+
+            <div class="form-item">
+                <label for="password"></label>
+                <input type="password" name="password" placeholder="パスワード"></input>
+            </div>
+
+            <div class="button-panel">
+                <input type="submit" class="button" name="login" title="Log In" value="ログイン"></input> 
+            </div>
+
+        </form>
+        <div class="form-footer">
+            <p><a href="{% url 'newAcc' %}">アカウント新規作成</a></p>
+            <p><a href="{% url 'resetPass' %}">パスワードを忘れてしまった方</a></p>
+        </div>
+    </div>
+</body>

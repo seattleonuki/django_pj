@@ -1,0 +1,249 @@
+{% load static %}
+<html lang="ja">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'admin_css/home.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">管理者サイト</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="Navber">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Account <span class="sr-only">(現位置)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Domain</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Role
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">メニュー1</a>
+                    <a class="dropdown-item" href="#">メニュー2</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">その他</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a href="#" class="nav-link">{{ user.username }}でログイン中</a>
+                    {% endif %}
+                </li>
+
+                </ul>
+                <ul class="justify-content-end">
+                    <form action="{% url 'logOut' %}">
+                        <input type="submit" class="btn btn-success my-2 my-sm-0" name="logOut" titile="Log out" value="ログアウト"></input>
+                    </form>
+                </ul>
+            </div>
+    </nav>
+
+
+    <h1>従業員リスト</h1>
+    
+    {% if user.is_authenticated %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+                <div class="col-md-10">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th scope="col">申込者一覧</th>
+                            <th scope="col">ステータス</th>
+                            <th scope="col">実行</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for employee in employees %}
+                        <tr>
+                            
+                            <div class="col-md-2">
+                                <th scope="row">{{ employee.id }}</th>
+                            </div>
+
+                            <div class="col-md-8">
+                                <td><a href="{% url 'payment' %}">{{ employee.name }}</a></td>
+                            </div>
+
+                            <div class="col-md-1">
+                                <td>
+                                    <span class="badge badge-danger">保険会社差戻し</span>
+                                </td>
+                            </div>
+
+                            <div class="col-md-1">
+                                <td>
+                                <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" data-pk="{{ employee.id }}" data-name="{{ employee.name }}" id="edit" value="編集">
+                                <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal" data-pk="{{ employee.id }}" data-name="{{ employee.name }}" id="delete" value="削除">
+                                </td>
+                            </div>
+                            
+                        </tr>
+                        
+                        {% endfor %}
+                        <tr>
+                            <div class="col-md-2">
+                                <th scope="row">6</th>
+                            </div>
+
+                            <div class="col-md-8">
+                                <td><a href="{% url 'apply_info' %}">山田花子</a></td>
+                            </div>
+
+                            <div class="col-md-1">
+                                <td>
+                                    <span class="badge badge-warning">保険会社承認待ち</span>
+                                </td>
+                            </div>
+
+                            <div class="col-md-1">
+                                <td>
+                                <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" data-pk="{{ employee.id }}" data-name="{{ employee.name }}" id="edit" value="編集">
+                                <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal" data-pk="{{ employee.id }}" data-name="{{ employee.name }}" id="delete" value="削除">
+                                </td>
+                            </div>
+
+                        </tr> 
+                        <!-- ここまではデータの取得ができている（ブラウザ検証） -->
+                    </tbody>
+                </table>
+                </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+    {% else %}
+    <a class="lead" href="{% url 'login' %}">Log in</a>
+    <form action="{% url 'logOut' %}">
+        <div class="button-panel">
+            <input type="submit" class="button" name="logOut" titile="Log out" value="ログアウト"></input>
+        </div>
+    </form>
+    {% endif %}
+
+    
+
+<!-- 追加 -->
+<div class="modal fade" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">アカウント情報を入力してください。</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{% url 'add' %}" method="post">
+                {% csrf_token %}
+            <div class="modal-body">
+                <div class="form-group">
+                    {% if register_error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ register_error }}
+                    </div>
+                    {% endif %}
+                    <label for="AddEmail">アカウント名 <span class="badge badge-danger">必須</span></label>
+                    <input type="text" class="form-control" id="AddEmail" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="AddPassword">パスワード <span class="badge badge-danger">必須</span></label>
+                    <input type="password" class="form-control" id="AddPassword" name="password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                <input type="submit" class="btn btn-primary" value="アカウントを追加"></button>
+            </div>
+            </form>
+            
+            </div>
+        </div>
+</div>
+
+<!-- 編集 -->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">アカウントを編集してください。</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'updateCompany' %}" method="POST">
+                {% csrf_token %}
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="EditName">Account</label>
+                    <input type="text" class="form-control" id="EditName" name="name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                <button type="submit" class="btn btn-primary">変更を保存</button>
+            </div>
+            </form>
+
+            </div>
+        </div>
+</div>
+
+<!-- 削除 -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">アカウントの削除</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="{% url 'deleteCompany' %}" method="post">
+            {% csrf_token %}
+        <div class="modal-body">
+            <p>本当に"<strong><span id="AccountName" name=""></span></strong>"を削除してもよろしいですか？</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+            <button type="submit" class="btn btn-danger">削除する</button>
+        </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+    
+
+<script>
+    $('#edit').on('click', function(){
+        
+        $('#EditModal').modal('show');
+        $('#EditName').text(data('name'));
+    });
+
+    $('#DeleteModal').on('show.bs.modal', function(event){
+
+        var button = $(event.relatedTarget);
+        var delete_name = button.data('name');
+        var modal = $(this);
+        modal.find('#AccountName').text(delete_name);
+    });
+</script>
+</body>
+</html>

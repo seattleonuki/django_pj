@@ -1,0 +1,185 @@
+{% load static %}
+<html lang="ja">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'admin_css/home.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">管理者サイト</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="Navber">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Account <span class="sr-only">(現位置)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Domain</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Role
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">メニュー1</a>
+                <a class="dropdown-item" href="#">メニュー2</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">その他</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                {% if user.is_authenticated %}
+                <a href="#" class="nav-link">{{ user.username }}でログイン中</a>
+                {% endif %}
+            </li>
+
+            </ul>
+            <ul class="justify-content-end">
+                <form action="{% url 'logOut' %}">
+                    <input type="submit" class="btn btn-success my-2 my-sm-0" name="logOut" titile="Log out" value="ログアウト"></input>
+                </form>
+            </ul>
+        </div>
+    </nav>
+
+
+    <h1>支払情報確認</h1>
+
+    <div class="container">
+        <div class="row">
+
+        <div class="col-md-10">
+            <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">申込者情報</a>
+                <a class="nav-item nav-link" id="nav-receiver-tab" data-toggle="tab" href="#nav-receiver" role="tab" aria-controls="nav-receiver" aria-selected="false">受取人情報</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-insurance" role="tab" aria-controls="nav-contact" aria-selected="false">保険情報</a>
+            </div>
+            </nav>
+
+            <div class="tab-content mt-3" id="nav-tabContent">
+                <div class="tab-pane active" id="nav-profile" aria-labelledby="nav-profile-tab">
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>名前</th>
+                            <th scope="col">生年月日</th>
+                            <th scope="col">住所</th>
+                            <th scope="col">性別</th>
+                            <th scope="col">企業名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <div class="col">
+                            <td>佐藤太郎</td>
+                        </div>
+                        <div class="col">
+                            <td>1996/09/09</td>
+                        </div>
+                        <div class="col">
+                            <td>東京都江東区〇〇〇〇〇〇〇〇</td>
+                        </div>
+                        <div class="col">
+                            <td>男</td>
+                        </div>
+                        <div class="col">
+                            <td>シアトルコンサルティング株式会社</td>
+                        </div>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                
+                <div class="tab-pane" id="nav-receiver" aria-labelledby="nav-receiver-tab">
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>受取人名</th>
+                            <th scope="col">金融機関</th>
+                            <th scope="col">口座種別</th>
+                            <th scope="col">支店名</th>
+                            <th scope="col">口座番号</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <div class="col-md-3">
+                            <td>佐藤花子</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>三菱UFJ銀行</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>普通</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>青山支店</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>0678213</td>
+                        </div>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane" id="nav-insurance" aria-labelledby="nav-insurance-tab">
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>加入済み保険</th>
+                            <th scope="col">種別</th>
+                            <th scope="col">契約締結日</th>
+                            <th scope="col">保険期間満了日</th>
+                            <th scope="col">払込保険料</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <div class="col-md-3">
+                            <td>団体保険</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>定期型</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>2019/4/24</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>2024/4/23</td>
+                        </div>
+                        <div class="col-md-3">
+                            <td>¥7,081</td>
+                        </div>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div><br>
+
+            <div class="form-group">
+                <h3><label for="FormControlTextarea">承認/差戻理由</label></h3>
+                <textarea class="form-control" id="FormControlTextarea" rows="3" style="height: 180px;"></textarea>
+            </div>
+        </div>
+
+        </div>
+
+        <a href="{% url 'finished_pay' %}" onclick="return confirm('承認してもよろしいですか？');"><input type="submit" class="btn btn-primary" value="承認"></a>
+        <a href="#" onclick="return confirm('請求を差戻ししてもよろしいですか？')"><input type="submit" class="btn btn-danger" value="差戻"></a>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
